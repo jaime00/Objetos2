@@ -21,7 +21,7 @@ public class Principal extends javax.swing.JFrame {
 
     public Principal() {
         initComponents();
-        cmdMixto.setEnabled(false);
+        cmdFraccionario.setEnabled(false);
         txtEntero1.requestFocusInWindow();
     }
 
@@ -46,7 +46,7 @@ public class Principal extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         txtNumerador2 = new javax.swing.JTextField();
         cmbOperaciones = new javax.swing.JComboBox<>();
-        cmdMixto = new javax.swing.JButton();
+        cmdFraccionario = new javax.swing.JButton();
         cmdCalcular = new javax.swing.JButton();
         cmdLimpiar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -119,8 +119,13 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 350, 200));
 
-        cmdMixto.setText("Convertir a Mixto");
-        jPanel1.add(cmdMixto, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 350, 130, 30));
+        cmdFraccionario.setText("Convertir a Fraccionario");
+        cmdFraccionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdFraccionarioActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cmdFraccionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 350, 150, 30));
 
         cmdCalcular.setText("Calcular");
         cmdCalcular.addActionListener(new java.awt.event.ActionListener() {
@@ -128,7 +133,7 @@ public class Principal extends javax.swing.JFrame {
                 cmdCalcularActionPerformed(evt);
             }
         });
-        jPanel1.add(cmdCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 130, 30));
+        jPanel1.add(cmdCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 150, 30));
 
         cmdLimpiar.setText("Limpiar");
         cmdLimpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -136,7 +141,7 @@ public class Principal extends javax.swing.JFrame {
                 cmdLimpiarActionPerformed(evt);
             }
         });
-        jPanel1.add(cmdLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 300, 130, 30));
+        jPanel1.add(cmdLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 300, 150, 30));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Resultado:"));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -157,7 +162,7 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,7 +171,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(409, 446));
+        setSize(new java.awt.Dimension(423, 446));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -280,10 +285,21 @@ public class Principal extends javax.swing.JFrame {
                         txtDenominador3.setText("" + m3.getDenominador());
 
                 }
-                cmdMixto.setEnabled(true);
+                cmdFraccionario.setEnabled(true);
+                txtEntero1.setEditable(false);
+                txtEntero2.setEditable(false);
+                txtEntero3.setEditable(false);
+                txtNumerador1.setEditable(false);
+                txtNumerador2.setEditable(false);
+                txtNumerador3.setEditable(false);
+                txtDenominador1.setEditable(false);
+                txtDenominador2.setEditable(false);
+                txtDenominador3.setEditable(false);
+                cmbOperaciones.setEnabled(false);
+                cmdCalcular.setEnabled(false);
             } catch (clases.DenominadorCeroExeption e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE);
-            }catch(NumberFormatException e){}
+                JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            } catch (NumberFormatException e) {}
 
         }
     }//GEN-LAST:event_cmdCalcularActionPerformed
@@ -298,11 +314,45 @@ public class Principal extends javax.swing.JFrame {
         txtDenominador1.setText("");
         txtDenominador2.setText("");
         txtDenominador3.setText("");
-        
+
         txtEntero1.requestFocusInWindow();
         cmbOperaciones.setSelectedIndex(0);
+        cmbOperaciones.setEnabled(true);
+        cmdCalcular.setEnabled(true);
+        cmdFraccionario.setEnabled(false);
         
+        txtEntero1.setEditable(true);
+        txtEntero2.setEditable(true);
+        txtEntero3.setEditable(false);
+        txtNumerador1.setEditable(true);
+        txtNumerador2.setEditable(true);
+        txtNumerador3.setEditable(false);
+        txtDenominador1.setEditable(true);
+        txtDenominador2.setEditable(true);
+        txtDenominador3.setEditable(false);
+
     }//GEN-LAST:event_cmdLimpiarActionPerformed
+
+    private void cmdFraccionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdFraccionarioActionPerformed
+        if ((txtEntero3.getText().trim().isEmpty()) || (txtNumerador3.getText().trim().isEmpty()) || (txtDenominador3.getText().trim().isEmpty())) {
+            JOptionPane.showMessageDialog(this, "Para convertirlo a fraccion debe pulsar calcular");
+            cmdCalcular.requestFocusInWindow();
+        } else {
+            int ent, num, den;
+            ent = Integer.parseInt(txtEntero3.getText());
+            num = Integer.parseInt(txtNumerador3.getText());
+            den = Integer.parseInt(txtDenominador3.getText());
+
+            int num1 = (ent * den) + num;
+            int den1 = (den);
+
+            txtEntero3.setText("");
+            txtNumerador3.setText("" + num1);
+            txtDenominador3.setText("" + den1);
+            cmdFraccionario.setEnabled(false);
+        }
+
+    }//GEN-LAST:event_cmdFraccionarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -342,8 +392,8 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cmbOperaciones;
     private javax.swing.JButton cmdCalcular;
+    private javax.swing.JButton cmdFraccionario;
     private javax.swing.JButton cmdLimpiar;
-    private javax.swing.JButton cmdMixto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
