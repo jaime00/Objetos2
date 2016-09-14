@@ -15,10 +15,13 @@ public class Mixto {
     private int numerador;
     private int denominador;
 
-    public Mixto(int entero, int numerador, int denominador) {
+    public Mixto(int entero, int numerador, int denominador) throws DenominadorCeroExeption {
         this.entero = entero;
         this.numerador = numerador;
         this.denominador = denominador;
+        if(denominador == 0){
+            throw new DenominadorCeroExeption();
+        }
     }
 
     public int getEntero() {
@@ -45,7 +48,7 @@ public class Mixto {
         this.denominador = denominador;
     }
 
-    public Mixto Sumar(Mixto m2) {
+    public Mixto Sumar(Mixto m2) throws DenominadorCeroExeption {
         int entero = this.getEntero() + m2.getEntero();
         int numerador = this.numerador * m2.denominador + this.denominador * m2.numerador;
         int denominador = this.denominador * m2.denominador;
@@ -53,7 +56,7 @@ public class Mixto {
         return m;
     }
     
-    public Mixto Restar(Mixto m2){
+    public Mixto Restar(Mixto m2) throws DenominadorCeroExeption{
         int entero = this.getEntero() - m2.getEntero();
         int numerador =this.getNumerador() * m2.getDenominador() - this.getDenominador() * m2.getNumerador();
         int denominador = this.getDenominador() * m2.getDenominador();
@@ -61,7 +64,7 @@ public class Mixto {
         return m;
     }
 
-    public Mixto Multiplicacion(Mixto m2){
+    public Mixto Multiplicacion(Mixto m2) throws DenominadorCeroExeption{
         int entero = this.entero * m2.getEntero();
         int numerador = this.getNumerador() * m2.getNumerador();
         int denominador = this.getDenominador() * m2.getDenominador();
@@ -69,7 +72,7 @@ public class Mixto {
         return m;
     }
     
-    public Mixto Dividir(Mixto m2){
+    public Mixto Dividir(Mixto m2) throws DenominadorCeroExeption{
         int entero = this.getEntero() / m2.getEntero();
         int numerador = this.getNumerador() * m2.getDenominador();
         int den = this.denominador * m2.getDenominador();
